@@ -1168,8 +1168,7 @@ class LoginComponent {
         this.loginService.login(email, password).subscribe((res) => {
             if (res.status === 200) {
                 localStorage.setItem('authToken', res.body.data.authToken);
-                // this.router.navigate(['/dashboard']);
-                window.location.href = "/#/dashboard";
+                this.router.navigate(['/dashboard']);
             }
         }, (error) => {
             sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire(error.error.error, '', 'error');

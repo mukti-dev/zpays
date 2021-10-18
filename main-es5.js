@@ -2243,6 +2243,8 @@
         }, {
           key: "onLoginButtonClicked",
           value: function onLoginButtonClicked(email, password) {
+            var _this7 = this;
+
             if (!email || email.trim() == "") {
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Please enter email ID', '', 'warning');
               return false;
@@ -2255,9 +2257,9 @@
 
             this.loginService.login(email, password).subscribe(function (res) {
               if (res.status === 200) {
-                localStorage.setItem('authToken', res.body.data.authToken); // this.router.navigate(['/dashboard']);
+                localStorage.setItem('authToken', res.body.data.authToken);
 
-                window.location.href = "/#/dashboard";
+                _this7.router.navigate(['/dashboard']);
               }
             }, function (error) {
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire(error.error.error, '', 'error');
@@ -2755,11 +2757,11 @@
         _createClass(LatestRechargeComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this7 = this;
+            var _this8 = this;
 
             this.rechargeservice.getLatestRecharges().subscribe(function (recharges) {
               if (recharges.success == true) {
-                _this7.recharges = recharges.data;
+                _this8.recharges = recharges.data;
               }
             });
             this.loadDataTable();
@@ -3647,16 +3649,16 @@
         _createClass(UserRechargeComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this8 = this;
+            var _this9 = this;
 
             this.route.params.subscribe(function (params) {
               console.log(params.userId);
 
               if (params.userId) {
-                _this8.selectedUserId = params.userId;
+                _this9.selectedUserId = params.userId;
 
-                _this8.Rechargeservice.getRecharges(params.userId).subscribe(function (recharges) {
-                  _this8.recharges = recharges.data;
+                _this9.Rechargeservice.getRecharges(params.userId).subscribe(function (recharges) {
+                  _this9.recharges = recharges.data;
                 });
               }
             }); // this.WalletbalanceService.getWalletbalances().subscribe((walletEntries: UserWallet[]) => {
@@ -4283,12 +4285,12 @@
         _createClass(UserWalletComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this9 = this;
+            var _this10 = this;
 
             var userId = this.route.snapshot.paramMap.get('userId');
             this.userService.getUser(userId).subscribe(function (response) {
-              _this9.userdata = JSON.parse(JSON.stringify(response['data']));
-              console.log(_this9.userdata);
+              _this10.userdata = JSON.parse(JSON.stringify(response['data']));
+              console.log(_this10.userdata);
             });
             this.loadDataTable(userId); // this.route.params.subscribe(
             //   (params: Params) => {
@@ -4709,16 +4711,16 @@
         _createClass(DashboardComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this10 = this;
+            var _this11 = this;
 
             var authToken = localStorage.getItem('authToken');
             console.log(authToken); // this.common.loadScript()
 
             this.usersService.getSignup().subscribe(function (signups) {
-              _this10.signups = signups;
+              _this11.signups = signups;
             });
             this.usersService.getRecharges().subscribe(function (recharges) {
-              _this10.recharges = recharges;
+              _this11.recharges = recharges;
             });
           }
         }]);
@@ -6069,7 +6071,7 @@
         }, {
           key: "createOperator",
           value: function createOperator(operatorcode, operatorname, cashbackPercentageForZpay, cashbackPercentageForCustomer, operatorstatus) {
-            var _this11 = this;
+            var _this12 = this;
 
             var validate = this.validating(operatorcode, operatorname, cashbackPercentageForZpay, cashbackPercentageForCustomer, operatorstatus);
 
@@ -6081,7 +6083,7 @@
             this.operatorService.createOperator(operatorcode, operatorname, cashbackPercentageForZpay, cashbackPercentageForCustomer, operatorstatus).subscribe(function (operator) {
               console.log(operator); // Now we navigate to /users/user._id
 
-              _this11.router.navigate(['/operator-list']);
+              _this12.router.navigate(['/operator-list']);
             });
           }
         }, {
@@ -6411,13 +6413,13 @@
         _createClass(LoginService, [{
           key: "login",
           value: function login(email, password) {
-            var _this12 = this;
+            var _this13 = this;
 
             return this.webService.login(email, password).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["shareReplay"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])(function (res) {
               console.log(res); // localStorage.setItem('authToken', res.body.authToken)
               // the auth tokens will be in the header of this response
 
-              _this12.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
+              _this13.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
 
               console.log(localStorage.getItem('x-access-token'));
             }));
@@ -6881,10 +6883,10 @@
         }, {
           key: "isLoggedIn",
           value: function isLoggedIn(token) {
-            var _this13 = this;
+            var _this14 = this;
 
             return new Promise(function (resolve, rejects) {
-              _this13.userService.userAuth(token).subscribe(function (response) {
+              _this14.userService.userAuth(token).subscribe(function (response) {
                 if (response['success'] == true) {
                   resolve('OK');
                 } else {
@@ -7817,29 +7819,29 @@
         _createClass(EditUserComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this14 = this;
+            var _this15 = this;
 
             this.route.params.subscribe(function (params) {
               if (params.userId) {
-                _this14.selectedUserId = params.userId;
+                _this15.selectedUserId = params.userId;
 
-                _this14.usersService.getUser(params.userId).subscribe(function (users) {
-                  _this14.users = users;
+                _this15.usersService.getUser(params.userId).subscribe(function (users) {
+                  _this15.users = users;
                 });
               } else {
-                _this14.users = undefined;
+                _this15.users = undefined;
               }
             });
           }
         }, {
           key: "updateUser",
           value: function updateUser(id, username, email, password, phone) {
-            var _this15 = this;
+            var _this16 = this;
 
             this.usersService.updateUser(id, username, email, password, phone).subscribe(function (user) {
               console.log(user); // Now we navigate to /users/user._id
 
-              _this15.router.navigate(['/user-list']);
+              _this16.router.navigate(['/user-list']);
             });
           }
         }]);
@@ -8997,16 +8999,16 @@
         _createClass(ListUserComponent, [{
           key: "ngOnInit",
           value: function ngOnInit() {
-            var _this16 = this;
+            var _this17 = this;
 
             window['angularComponentReference'] = {
               component: this,
               zone: this.ngZone,
               changeUserStatus: function changeUserStatus(id, status, cssid) {
-                return _this16.changeUserStatus(id, status, cssid);
+                return _this17.changeUserStatus(id, status, cssid);
               },
               userWalletRedirection: function userWalletRedirection(id) {
-                return _this16.userWalletRedirection(id);
+                return _this17.userWalletRedirection(id);
               }
             };
             $('#user-list').DataTable({
@@ -9076,29 +9078,29 @@
         }, {
           key: "onDeleteUserClick",
           value: function onDeleteUserClick(selectedUserId) {
-            var _this17 = this;
+            var _this18 = this;
 
             console.log("naruto");
             this.usersService.deleteUser(selectedUserId).subscribe(function (res) {
-              _this17.ngOnInit();
+              _this18.ngOnInit();
             });
           }
         }, {
           key: "onActiveUserClick",
           value: function onActiveUserClick(selectedUserId) {
-            var _this18 = this;
+            var _this19 = this;
 
             this.usersService.activeUser(selectedUserId).subscribe(function (res) {
-              _this18.ngOnInit();
+              _this19.ngOnInit();
             });
           }
         }, {
           key: "onInactiveUserClick",
           value: function onInactiveUserClick(selectedUserId) {
-            var _this19 = this;
+            var _this20 = this;
 
             this.usersService.inactiveUser(selectedUserId).subscribe(function (res) {
-              _this19.ngOnInit();
+              _this20.ngOnInit();
             });
           }
         }]);
@@ -9328,12 +9330,12 @@
         }, {
           key: "createUser",
           value: function createUser(username, email, password, phone) {
-            var _this20 = this;
+            var _this21 = this;
 
             this.usersService.createUser(username, email, password, phone).subscribe(function (user) {
               console.log(user); // Now we navigate to /users/user._id
 
-              _this20.router.navigate(['/user-list']);
+              _this21.router.navigate(['/user-list']);
             });
           }
         }]);
